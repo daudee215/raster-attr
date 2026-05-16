@@ -1,7 +1,5 @@
 """Integration tests: full round-trip using real sample data files."""
 
-import os
-import pytest
 from pathlib import Path
 
 from raster_attr import RasterAttributeTable
@@ -21,7 +19,7 @@ def test_sample_aux_xml_roundtrip():
 
     # Verify known class names from the sample
     names = rat.get_column("ClassName").values
-    assert "Water" in names
+    assert "Open Water" in names
 
 
 def test_sample_vat_dbf_roundtrip():

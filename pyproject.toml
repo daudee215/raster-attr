@@ -22,14 +22,15 @@ classifiers = [
     "Topic :: Scientific/Engineering :: GIS",
 ]
 dependencies = [
-    "GDAL>=3.4",
     "numpy>=1.24",
     "pandas>=2.0",
     "dbfread>=2.0.7",
     "lxml>=4.9",
 ]
 
+
 [project.optional-dependencies]
+gdal = ["GDAL>=3.4"]
 dev = [
     "pytest>=7.4",
     "pytest-benchmark>=4.0",
@@ -73,3 +74,8 @@ addopts = "--cov=raster_attr --cov-report=term-missing -q"
 
 [tool.coverage.run]
 source = ["src/raster_attr"]
+
+[[tool.mypy.overrides]]
+module = ["osgeo", "osgeo.gdal", "dbfread"]
+ignore_missing_imports = true
+

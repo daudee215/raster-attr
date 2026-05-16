@@ -1,7 +1,8 @@
 """Unit tests for .vat.dbf read/write backend (no GDAL needed)."""
 
+
 import pytest
-from pathlib import Path
+
 from raster_attr import RasterAttributeTable
 from raster_attr.backends import Backend
 

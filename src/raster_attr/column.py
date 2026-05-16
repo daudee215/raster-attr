@@ -1,6 +1,7 @@
 """Column type and usage enumerations for Raster Attribute Tables."""
 
 from __future__ import annotations
+
 from enum import Enum
 
 

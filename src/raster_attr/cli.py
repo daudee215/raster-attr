@@ -3,12 +3,9 @@
 from __future__ import annotations
 
 import argparse
-import json
 import sys
-from pathlib import Path
 
 from raster_attr import RasterAttributeTable
-from raster_attr.backends import Backend
 
 
 def _cmd_info(args: argparse.Namespace) -> int:
@@ -34,8 +31,8 @@ def _cmd_dump(args: argparse.Namespace) -> int:
 def _cmd_write(args: argparse.Namespace) -> int:
     import pandas as pd
     df = pd.read_csv(args.csv)
-    from raster_attr import RasterAttributeTable as RAT
-    rat = RAT.from_dataframe(df)
+    from raster_attr import RasterAttributeTable
+    rat = RasterAttributeTable.from_dataframe(df)
     rat.to_file(args.path, band=args.band, backend=args.backend)
     print(f"RAT written to {args.path} ({args.backend} backend)")
     return 0

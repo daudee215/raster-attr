@@ -5,13 +5,12 @@ from __future__ import annotations
 import copy
 import os
 from pathlib import Path
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
-import numpy as np
 import pandas as pd
 
-from raster_attr.column import ColType, ColUsage, RatColumn
 from raster_attr.backends import Backend, detect_backend, sidecar_path
+from raster_attr.column import ColType, ColUsage, RatColumn
 
 if TYPE_CHECKING:
     pass
@@ -228,7 +227,7 @@ class RasterAttributeTable:
         cls,
         df: pd.DataFrame,
         usages: dict[str, ColUsage | str] | None = None,
-    ) -> "RasterAttributeTable":
+    ) -> RasterAttributeTable:
         """Construct a RAT from a :class:`pandas.DataFrame`.
 
         Parameters
@@ -267,7 +266,7 @@ class RasterAttributeTable:
         path: str | Path,
         band: int = 1,
         backend: Backend | str = Backend.auto,
-    ) -> "RasterAttributeTable":
+    ) -> RasterAttributeTable:
         """Read a RAT from a raster file.
 
         Parameters
@@ -339,7 +338,7 @@ class RasterAttributeTable:
     # ------------------------------------------------------------------
 
     @classmethod
-    def _read_tiff(cls, path: str | Path, band: int) -> "RasterAttributeTable":
+    def _read_tiff(cls, path: str | Path, band: int) -> RasterAttributeTable:
         _ensure_gdal()
         ds = gdal.Open(str(path))
         if ds is None:
@@ -421,8 +420,8 @@ class RasterAttributeTable:
     # ------------------------------------------------------------------
 
     @classmethod
-    def _read_aux_xml(cls, raster_path: str | Path) -> "RasterAttributeTable":
-        from lxml import etree  # type: ignore[import]
+    def _read_aux_xml(cls, raster_path: str | Path) -> RasterAttributeTable:
+        from lxml import etree
 
         aux_path = sidecar_path(raster_path, Backend.aux_xml)
         if not aux_path.exists():
@@ -459,7 +458,7 @@ class RasterAttributeTable:
         return cls(columns=columns, row_count=n_rows)
 
     def _write_aux_xml(self, raster_path: str | Path) -> None:
-        from lxml import etree  # type: ignore[import]
+        from lxml import etree
 
         aux_path = sidecar_path(raster_path, Backend.aux_xml)
         # Load existing or create fresh root
@@ -468,7 +467,9 @@ class RasterAttributeTable:
             root = tree.getroot()
             # Remove existing RAT
             for old in root.findall(".//GDALRasterAttributeTable"):
-                old.getparent().remove(old)
+                parent = old.getparent()
+                if parent is not None:
+                    parent.remove(old)
         else:
             root = etree.Element("PAMDataset")
 
@@ -501,8 +502,8 @@ class RasterAttributeTable:
     # ------------------------------------------------------------------
 
     @classmethod
-    def _read_vat_dbf(cls, raster_path: str | Path) -> "RasterAttributeTable":
-        from dbfread import DBF  # type: ignore[import]
+    def _read_vat_dbf(cls, raster_path: str | Path) -> RasterAttributeTable:
+        from dbfread import DBF
 
         dbf_path = sidecar_path(raster_path, Backend.vat_dbf)
         if not dbf_path.exists():
@@ -515,7 +516,7 @@ class RasterAttributeTable:
         # Build columns from first record
         sample = table.records[0]
         columns: list[RatColumn] = []
-        for field_name in sample.keys():
+        for field_name in sample:
             val = sample[field_name]
             if isinstance(val, int):
                 ct = ColType.Integer
@@ -550,7 +551,8 @@ class RasterAttributeTable:
 
     def _write_vat_dbf(self, raster_path: str | Path) -> None:
         """Write a ``.vat.dbf`` using the struct-based dBASE III format."""
-        import struct, datetime
+        import datetime
+        import struct
 
         dbf_path = sidecar_path(raster_path, Backend.vat_dbf)
 
@@ -627,6 +629,6 @@ class RasterAttributeTable:
             return NotImplemented
         return self._row_count == other._row_count and self._columns == other._columns
 
-    def copy(self) -> "RasterAttributeTable":
+    def copy(self) -> RasterAttributeTable:
         """Return a deep copy."""
         return copy.deepcopy(self)

@@ -14,9 +14,9 @@ Quick start::
     rat.to_file("landcover_updated.tif")
 """
 
-from raster_attr.rat import RasterAttributeTable
-from raster_attr.column import RatColumn, ColType, ColUsage
 from raster_attr.backends import Backend
+from raster_attr.column import ColType, ColUsage, RatColumn
+from raster_attr.rat import RasterAttributeTable
 
 __version__ = "0.1.0"
 __all__ = ["RasterAttributeTable", "RatColumn", "ColType", "ColUsage", "Backend"]

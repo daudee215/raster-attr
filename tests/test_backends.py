@@ -1,7 +1,5 @@
 """Unit tests for backend detection logic."""
 
-import os
-import tempfile
 from pathlib import Path
 
 import pytest

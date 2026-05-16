@@ -1,7 +1,8 @@
 """Unit tests for RasterAttributeTable core operations."""
 
-import pytest
 import pandas as pd
+import pytest
+
 from raster_attr import RasterAttributeTable
 from raster_attr.column import ColType, ColUsage
 

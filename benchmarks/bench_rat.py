@@ -9,16 +9,12 @@ classes to stress-test the .aux.xml and .vat.dbf backends.
 
 from __future__ import annotations
 
-import os
-import tempfile
 import random
-from pathlib import Path
 
 import pytest
 
 from raster_attr import RasterAttributeTable
 from raster_attr.backends import Backend
-
 
 N_CLASSES = 50_000
 

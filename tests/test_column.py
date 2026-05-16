@@ -1,6 +1,7 @@
 """Unit tests for RatColumn, ColType, ColUsage."""
 
 import pytest
+
 from raster_attr.column import ColType, ColUsage, RatColumn
 
 
