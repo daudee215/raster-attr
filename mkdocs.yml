@@ -1,0 +1,37 @@
+site_name: raster-attr
+site_description: Read, write, and manipulate Raster Attribute Tables (RATs) in Python.
+site_url: https://daudee215.github.io/raster-attr
+repo_url: https://github.com/daudee215/raster-attr
+repo_name: daudee215/raster-attr
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: deep orange
+  features:
+    - navigation.tabs
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - API Reference: api.md
+  - ADR: adr/0001-architecture.md
+  - Roadmap: roadmap.md
+  - Contributing: contributing.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: true
+            show_root_heading: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences

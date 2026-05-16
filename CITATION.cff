@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "raster-attr: Raster Attribute Table read/write for Python"
+version: 0.1.0
+date-released: "2026-05-16"
+url: "https://github.com/daudee215/raster-attr"
+repository-code: "https://github.com/daudee215/raster-attr"
+license: MIT
+authors:
+  - family-names: Tasleem
+    given-names: Daud
+    email: daudtasleem215@gmail.com
+keywords:
+  - GIS
+  - raster attribute table
+  - GDAL
+  - land cover
+  - remote sensing
+  - geospatial

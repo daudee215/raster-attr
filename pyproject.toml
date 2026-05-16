@@ -1,0 +1,75 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "raster-attr"
+version = "0.1.0"
+description = "Read, write, and manipulate Raster Attribute Tables (RATs) in Python — supports GeoTIFF internal metadata, .aux.xml, and .vat.dbf backends."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Daud Tasleem", email = "daudtasleem215@gmail.com" }]
+requires-python = ">=3.10"
+keywords = ["gis", "raster", "gdal", "raster-attribute-table", "geospatial", "land-cover", "remote-sensing"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+dependencies = [
+    "GDAL>=3.4",
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "dbfread>=2.0.7",
+    "lxml>=4.9",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-benchmark>=4.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.4",
+    "mypy>=1.9",
+    "mkdocs>=1.5",
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.25",
+    "pre-commit>=3.6",
+]
+
+[project.scripts]
+raster-attr = "raster_attr.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/daudee215/raster-attr"
+"Bug Tracker" = "https://github.com/daudee215/raster-attr/issues"
+Documentation = "https://daudee215.github.io/raster-attr"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/raster_attr"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src/raster_attr"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=raster_attr --cov-report=term-missing -q"
+
+[tool.coverage.run]
+source = ["src/raster_attr"]
