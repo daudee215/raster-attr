@@ -4,7 +4,6 @@
 
 Raster Attribute Tables store per-class metadata for categorical rasters — land cover, soil type, vegetation class, habitat maps. Every major GIS format supports them, but Python has had no clean, tested library for working with them across all storage backends. This tool fills that gap.
 
-[![PyPI](https://img.shields.io/pypi/v/raster-attr)](https://pypi.org/project/raster-attr/)
 [![CI](https://github.com/daudee215/raster-attr/actions/workflows/ci.yml/badge.svg)](https://github.com/daudee215/raster-attr/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue)](https://www.python.org)
@@ -41,10 +40,14 @@ The raw GDAL Python bindings (`osgeo.gdal.RasterAttributeTable`) only cover the 
 ## Install
 
 ```bash
-pip install raster-attr
+git clone https://github.com/daudee215/raster-attr.git
+cd raster-attr
+python -m pip install .
+raster-attr --help
 ```
 
-GDAL must be installed separately (system package or conda):
+Install GDAL separately to read or write RATs embedded in GeoTIFFs. The PAM XML
+and dBASE sidecar backends run with the package dependencies above.
 
 ```bash
 conda install -c conda-forge gdal

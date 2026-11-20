@@ -219,7 +219,7 @@ class RasterAttributeTable:
             elif col.col_type == ColType.Real:
                 data[col.name] = pd.array(col.values, dtype="float64")
             else:
-                data[col.name] = col.values
+                data[col.name] = pd.Series(col.values, dtype=object)
         return pd.DataFrame(data)
 
     @classmethod

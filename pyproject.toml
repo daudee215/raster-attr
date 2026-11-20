@@ -76,6 +76,6 @@ addopts = "--cov=raster_attr --cov-report=term-missing -q"
 source = ["src/raster_attr"]
 
 [[tool.mypy.overrides]]
-module = ["osgeo", "osgeo.gdal", "dbfread"]
+module = ["osgeo", "osgeo.gdal", "dbfread", "pandas", "lxml"]
 ignore_missing_imports = true
 

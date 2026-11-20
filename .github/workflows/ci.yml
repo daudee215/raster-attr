@@ -24,14 +24,9 @@ jobs:
 
       - name: Install uv
         uses: astral-sh/setup-uv@v4
-        with:
-          version: "0.4"
-
-      - name: Set up Python ${{ matrix.python-version }}
-        run: uv python install ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: uv sync --extra dev
+        run: uv sync --python ${{ matrix.python-version }} --extra dev
 
       - name: Lint (ruff)
         run: uv run ruff check src tests benchmarks
@@ -62,8 +57,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v4
-      - run: uv sync --extra dev
-      - run: uv run pip-audit
+      - run: uv sync --python 3.12 --extra dev
+      - name: Audit the test environment
+        run: uvx pip-audit --path "$(uv run python -c 'import sysconfig; print(sysconfig.get_path("purelib"))')"
 
   secret-scan:
     name: Secret scan
